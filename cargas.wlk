@@ -1,13 +1,21 @@
 object verdurin{
     var cajonesVerduras = 10
     const velocidadMax = 80
-    const kilosCajones = 50
-    var kilometraje = 700000 // no se su uso todavia
+    const kilosCajones = 5000
+    var kilometraje = 700000
+    var velocidadActual = 70 //para ver si permito el paso en rutatlantica
 
     //se le puede indicar en cualquier momento la cantidad de cajones para transportar
     
     method pesoCarga() = cajonesVerduras*kilosCajones
     method velMax() = velocidadMax - ((self.pesoCarga())/500).floor()
+
+    method velActual() = velocidadActual
+
+    method nuevaVelActual(nuevaVelocidad){
+        if(nuevaVelocidad <= velocidadMax)
+            velocidadActual = nuevaVelocidad
+    }
 
     method recorrioEnKilometros(kmRecorridos) {
         kilometraje = kilometraje+ kmRecorridos
@@ -23,6 +31,7 @@ object verdurin{
 object scanion5000{
     const carga = 5000 //en litros, el volumen del camion es litros dividido mil, asi obtenemos metros cubicos
     const velocidadMax = 140
+    var velocidadActual = 60
     var densidadLiquidoTransportado = 9  //Peso depende de la densidad del liquido transportado
     var kilometraje = 0 //por inicializar un valor, el mismo solo sirve para informar
 
@@ -35,6 +44,13 @@ object scanion5000{
     method recorrioEnKilometros(kmRecorridos){
         kilometraje = kilometraje + kmRecorridos
     }
+
+    method nuevaVelActual(nuevaVelocidad){
+        if(nuevaVelocidad <= velocidadMax)
+            velocidadActual = nuevaVelocidad
+    }
+
+    method velActual() = velocidadActual
 
     method kilometraje() = kilometraje //para informar
 
@@ -62,8 +78,11 @@ object cerealitas{
         }
     }
 
-    method velActual(nuevaVelocidad){ 
-        velocidadActual = nuevaVelocidad
+    method velActual() = velocidadActual
+
+    method nuevaVelActual(nuevaVelocidad){ 
+        if(nuevaVelocidad <= self.velMax())
+            velocidadActual = nuevaVelocidad
     }
 
     method kmPorHoraQueExcede(){ 
@@ -83,7 +102,7 @@ object cerealitas{
 
 object rutatlantica{
     const adicionalPorKilos = 100
-    const ubicacionEnKM = 400
+    //const ubicacionEnKM = 400 //no se donde se debería usar, no se menciona nada de cambiar los kilometros o que eso afecte a los vehiculos
     const velocidadMaxPuesto = 75
     method cargaAdicional(vehiculo) = ((vehiculo.pesoCarga() /1000)).floor()*adicionalPorKilos
 
@@ -91,11 +110,14 @@ object rutatlantica{
         return 7000 + self.cargaAdicional(vehiculo) 
     }
 
-    method modificacionesVehiculo(vehiculo) {
-
+    method puedePasar(vehiculo){
+        return vehiculo.velActual() <= velocidadMaxPuesto
     }
 
-    //camion que pasa por este puesto recorre 400kms y debe ir a un maximo de 75km/h
+    method pasarVehiculo(vehiculo) = 
+        if(self.puedePasar(vehiculo)){
+            self.cobro(vehiculo)
+        }
+        else 0 //si no puede pasar? 
+    }
 
-
-}
