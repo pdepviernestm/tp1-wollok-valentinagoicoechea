@@ -17,9 +17,10 @@ object verdurin{
             velocidadActual = nuevaVelocidad
     }
 
-    method recorrioEnKilometros(kmRecorridos) {
-        kilometraje = kilometraje+ kmRecorridos
-    } //solo registra sus kilometros recorridos
+    
+    method kilometrosRecorridos(kilometros){
+        kilometraje = kilometraje + kilometros
+    }
     
     method cantidadCajones(nuevaCantidad) {
         cajonesVerduras = nuevaCantidad
@@ -41,8 +42,8 @@ object scanion5000{
     method velMax() = velocidadMax
     method pesoCarga() = densidadLiquidoTransportado *(carga/1000)
 
-    method recorrioEnKilometros(kmRecorridos){
-        kilometraje = kilometraje + kmRecorridos
+    method kilometrosRecorridos(kilometros){
+        kilometraje = kilometraje + kilometros
     }
 
     method nuevaVelActual(nuevaVelocidad){
@@ -61,6 +62,7 @@ object cerealitas{
     var nivelDeDeterioro = 0 //No puede modificarse eternamente, aumenta al hacer viajes
     var velocidadActual = 50 //por decir algo
     var carga= 0 //Varia por cada viaje
+    var kilometraje = 0 //no especifica valor de inicio
 
     method nuevoCargamento(nuevaCarga) {
         carga= nuevaCarga
@@ -93,6 +95,12 @@ object cerealitas{
         }
     }
 
+    method kilometrosRecorridos(kilometros){
+        kilometraje = kilometraje + kilometros
+    }
+
+    method kilometraje() = kilometraje //para informar 
+
     method deterioro(){
         nivelDeDeterioro = nivelDeDeterioro + self.kmPorHoraQueExcede()
     }
@@ -102,7 +110,7 @@ object cerealitas{
 
 object rutatlantica{
     const adicionalPorKilos = 100
-    //const ubicacionEnKM = 400 //no se donde se debería usar, no se menciona nada de cambiar los kilometros o que eso afecte a los vehiculos
+    const ubicacionEnKM = 400
     const velocidadMaxPuesto = 75
     method cargaAdicional(vehiculo) = ((vehiculo.pesoCarga() /1000)).floor()*adicionalPorKilos
 
@@ -114,10 +122,15 @@ object rutatlantica{
         return vehiculo.velActual() <= velocidadMaxPuesto
     }
 
+    method kilometrosRecorridosAlPasar(vehiculo){
+        vehiculo.kilometrosRecorridos(ubicacionEnKM)
+    }
+
     method pasarVehiculo(vehiculo) = 
         if(self.puedePasar(vehiculo)){
+            self.kilometrosRecorridosAlPasar(vehiculo)
             self.cobro(vehiculo)
         }
-        else 0 //si no puede pasar? 
+        else 999999 //si no puede pasar 
     }
 
