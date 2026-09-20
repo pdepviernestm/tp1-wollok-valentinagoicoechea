@@ -126,11 +126,13 @@ object rutatlantica{
         vehiculo.kilometrosRecorridos(ubicacionEnKM)
     }
 
-    method pasarVehiculo(vehiculo) = 
+    method pasarVehiculo(vehiculo) {
         if(self.puedePasar(vehiculo)){
             self.kilometrosRecorridosAlPasar(vehiculo)
-            self.cobro(vehiculo)
+            return self.cobro(vehiculo)
         }
-        else 999999 //si no puede pasar 
+        else 
+            return 999999 //si no puede pasar 
     }
+}
 
