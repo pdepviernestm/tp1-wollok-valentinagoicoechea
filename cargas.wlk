@@ -4,11 +4,18 @@ object verdurin{
     const kilosCajones = 5000
     var kilometraje = 700000
     var velocidadActual = 70 //para ver si permito el paso en rutatlantica
+    var gasto = 0 
 
     //se le puede indicar en cualquier momento la cantidad de cajones para transportar
     
     method pesoCarga() = cajonesVerduras*kilosCajones
     method velMax() = velocidadMax - ((self.pesoCarga())/500).floor()
+
+    method gastoCamion() = gasto
+
+    method nuevoGasto(nuevoGasto){
+        gasto = gasto + nuevoGasto
+    }
 
     method velActual() = velocidadActual
 
@@ -35,12 +42,19 @@ object scanion5000{
     var velocidadActual = 60
     var densidadLiquidoTransportado = 9  //Peso depende de la densidad del liquido transportado
     var kilometraje = 0 //por inicializar un valor, el mismo solo sirve para informar
+    var gasto = 0
 
     method liquidoTransportado(nuevaDensidad){ //varia por cada viaje
         densidadLiquidoTransportado = nuevaDensidad
     }
     method velMax() = velocidadMax
     method pesoCarga() = densidadLiquidoTransportado *(carga/1000)
+
+    method gastoCamion() = gasto
+
+    method nuevoGasto(nuevoGasto){
+        gasto = gasto + nuevoGasto
+    }
 
     method kilometrosRecorridos(kilometros){
         kilometraje = kilometraje + kilometros
@@ -63,9 +77,16 @@ object cerealitas{
     var velocidadActual = 50 //por decir algo
     var carga= 0 //Varia por cada viaje
     var kilometraje = 0 //no especifica valor de inicio
+    var gasto = 0
 
     method nuevoCargamento(nuevaCarga) {
         carga= nuevaCarga
+    }
+
+    method gastoCamion() = gasto
+
+    method nuevoGasto(nuevoGasto){
+        gasto = gasto + nuevoGasto
     }
 
     method pesoCarga() = carga
@@ -129,10 +150,8 @@ object rutatlantica{
     method pasarVehiculo(vehiculo) {
         if(self.puedePasar(vehiculo)){
             self.kilometrosRecorridosAlPasar(vehiculo)
-            return self.cobro(vehiculo)
+            vehiculo.nuevoGasto(self.cobro(vehiculo)) 
         }
-        else 
-            return 999999 //si no puede pasar 
     }
 }
 
