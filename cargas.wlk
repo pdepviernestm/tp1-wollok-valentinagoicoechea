@@ -20,8 +20,11 @@ object verdurin{
     method velActual() = velocidadActual
 
     method nuevaVelActual(nuevaVelocidad){
-        if(nuevaVelocidad <= velocidadMax)
+        if(nuevaVelocidad <= velocidadMax){
             velocidadActual = nuevaVelocidad
+        }else{
+            velocidadActual = self.velMax()
+        }
     }
 
     
@@ -61,8 +64,11 @@ object scanion5000{
     }
 
     method nuevaVelActual(nuevaVelocidad){
-        if(nuevaVelocidad <= velocidadMax)
+        if(nuevaVelocidad < velocidadMax){
             velocidadActual = nuevaVelocidad
+        }else{
+            velocidadActual = velocidadMax
+        }
     }
 
     method velActual() = velocidadActual
@@ -103,9 +109,12 @@ object cerealitas{
 
     method velActual() = velocidadActual
 
-    method nuevaVelActual(nuevaVelocidad){ 
-        if(nuevaVelocidad <= self.velMax())
+    method nuevaVelActual(nuevaVelocidad){
+        if(nuevaVelocidad < self.velMax()){
             velocidadActual = nuevaVelocidad
+        }else{
+            velocidadActual = self.velMax()
+        }
     }
 
     method kmPorHoraQueExcede(){ 
