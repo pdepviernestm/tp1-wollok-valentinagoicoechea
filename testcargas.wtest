@@ -1,0 +1,13 @@
+import cargas.*
+
+describe "test Verdurin" {
+  test "verdurin pasa por rutatlantica y paga 12000"{
+    rutatlantica.pasarVehiculo(verdurin)
+    assert.equals(12000, verdurin.gastoCamion())
+  }
+
+  test "verdurin pasa por rutatlantica y aumenta su kilometraje"{
+    rutatlantica.pasarVehiculo(verdurin)
+    assert.equals(700400, verdurin.kilometraje())
+  }
+}

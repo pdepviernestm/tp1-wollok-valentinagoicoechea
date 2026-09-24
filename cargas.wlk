@@ -138,6 +138,7 @@ object cerealitas{
 
 }
 
+
 object rutatlantica{
     const adicionalPorKilos = 100
     const ubicacionEnKM = 400
